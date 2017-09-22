@@ -1,0 +1,86 @@
+
+# Define UI for miles per gallon application
+shinyUI(pageWithSidebar(
+  
+  # Application title
+  headerPanel("CDFCP conservation prioritization v0.22.3 ILP"),
+  
+  # Sidebar with controls to select the variable to plot against mpg
+  # and to specify whether outliers should be included
+  sidebarPanel(
+#    strong(textOutput("clickcoordsnmds")),
+    #submitButton("Run Marxan")
+    actionButton("mrun",HTML("<h4>Run Optimization</h4>")), 
+    helpText("================================="), 
+    checkboxInput("MultiScen", "Run multiple scenarios"),
+    conditionalPanel(
+      condition = "input.MultiScen == true",  
+      helpText(HTML("You can either set the scenario parameters directly in the 'Scenario List' table on the right, or upload your scenario file below.<br>
+                    Make sure that your file follows the same structure as the table on the right.<br>
+                    For details about the columns please refer to the tool manual.")),
+      fileInput('scen_file', 'Choose scenario file to upload',
+                accept = c(
+                  'text/csv',
+                  'text/comma-separated-values',
+                  '.csv'))
+    ),
+    conditionalPanel(
+      condition = "input.MultiScen == false",
+      #actionButton("tree.update",HTML("Update tree community input")), 
+      helpText("================================="),
+      helpText(HTML("<h4><strong>Global parameters:</strong></h4>")),
+      #selectInput("time", "What time period/scenario do you want to use:",
+      #            c("present" = "curr")),
+      #    selectInput("scale", "What planning unit size do you want to use:",
+      #                c("100m" = "100",
+      #                  "250m" = "250",
+      #                  "500m" = "500")),
+      #sliderInput("FTcutoff", label = "Cutoff value for high quality features", 
+      #            min=0, max=100, value=0, step = 1),    
+      #    selectInput("connectivity", "Include connectivity in the analysis:",
+      #                c("No" = "no",
+      #                  "Yes" = "yes")),
+      selectInput("cost", "What cost metric should be used:",
+                  c("Assessed land value ($)" = "dollar",
+                    "Human score" = "human",
+                    "Property size (area)" = "area")),
+      selectInput("protected", "How to deal with protected areas:",
+                  c("Locked in" = "locked",
+                    "Available" = "avail"))
+    ),
+
+#    numericInput("Nreps", "Number of repeats:",100,min=1),
+#    checkboxInput("IndRuns", "Generate output for individual runs"),    
+    helpText("================================="),  
+    helpText(HTML("<h4><strong>Property exclusions:</strong></h4>")),
+    helpText(HTML("If you don't want to exclude properties simply leave values at 0")),
+    sliderInput("RoadD", label = "Road density (km/km2). Marxan will only select properties with road densities smaller than cutoff.", 
+                min=0, max=20, value=0.0, step = 0.1),    
+    sliderInput("AreaHa", label = "Parcel size (ha). Marxan will only select properties bigger than cutoff.", 
+                min=0, max=10, value=0, step=0.5),     
+    sliderInput("AgrD", label = "Agriculture density (km2/km2). Marxan will only select properties with agricultural densities smaller than cutoff.", 
+                min=0, max=1, value=0.0, step = 0.01)#,    
+#    helpText("================================="),  
+#    helpText(HTML("<h4><strong>Protection Targets:</strong></h4>")),
+#    actionButton("saveBtn", "Save Target values"),
+#    numericInput("Target", "Global Protection Target:",17,min=1,max=100),
+#    checkboxInput("LocalTar", "Set Individual Targets (Global Target will be ignored)"),
+#    conditionalPanel(
+#      condition = "input.LocalTar == true",
+#      numericInput("OFtarget", "Old Forest Birds Target:",17,min=0,max=100),
+#      numericInput("SAVtarget", "Savannah Birds Target:",17,min=0,max=100),
+#      numericInput("SHRtarget", "Shrub Birds Target:",0,min=0,max=100),
+#      numericInput("WETtarget", "Wetland Birds Target:",0,min=0,max=100),
+#      numericInput("HUM1target", "Negative Human Birds Target:",0,min=0,max=100)
+#    ),    
+    #helpText("=================================")
+
+    
+  ),
+  
+  # Outputs
+  mainPanel(
+    #Setup in Server.R
+    uiOutput("tabsets")
+  )
+))

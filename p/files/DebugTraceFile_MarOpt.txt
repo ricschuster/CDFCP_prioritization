@@ -1,0 +1,119 @@
+Marxan v 2.43 begin execution
+
+LoadOptions
+RandSeed iseed -1 RandSeed1 -1446491288
+before LoadPUData
+after LoadPUData
+prob field not present
+before LoadSpeciesData
+after LoadSpeciesData
+before build search arrays
+after build search arrays
+before ReadConnections
+after ReadConnections
+before LoadSparseMatrix
+after LoadSparseMatrix
+Prob2D is off
+before process block definitions
+after process block definitions
+before CalcTotalAreas
+after CalcTotalAreas
+before ApplySpecProp
+ApplySpecProp spname 94 target 159983.744400
+ApplySpecProp spname 93 target 108296.451600
+ApplySpecProp spname 92 target 379759.399800
+ApplySpecProp spname 91 target 86849.263800
+ApplySpecProp spname 90 target 415584.600000
+ApplySpecProp spname 89 target 223192.402200
+ApplySpecProp spname 88 target 375222.600000
+ApplySpecProp spname 87 target 129756.843000
+ApplySpecProp spname 86 target 431598.865500
+ApplySpecProp spname 85 target 453991.190100
+ApplySpecProp spname 84 target 403787.970900
+ApplySpecProp spname 83 target 460745.394300
+ApplySpecProp spname 82 target 395889.877500
+ApplySpecProp spname 81 target 550439.984700
+ApplySpecProp spname 80 target 333035.083800
+ApplySpecProp spname 79 target 248252.023200
+ApplySpecProp spname 78 target .22882.078400
+ApplySpecProp spname 77 target 497758.242300
+ApplySpecProp spname 76 target 512611.985700
+ApplySpecProp spname 75 target 632358.289500
+ApplySpecProp spname 74 target 57271.657200
+ApplySpecProp spname 73 target 572800.659000
+ApplySpecProp spname 72 target 18658.132800
+ApplySpecProp spname 71 target 175017.016800
+ApplySpecProp spname 70 target 284182.243800
+ApplySpecProp spname 69 target 505306.186200
+ApplySpecProp spname 68 target 394128.519000
+ApplySpecProp spname 67 target 107689.229400
+ApplySpecProp spname 66 target 329810.056200
+ApplySpecProp spname 65 target 443929.860000
+ApplySpecProp spname 64 target 361197.432600
+ApplySpecProp spname 63 target 491970.609600
+ApplySpecProp spname 62 target 23865.628200
+ApplySpecProp spname 61 target 420949.016700
+ApplySpecProp spname 60 target 383747.856000
+ApplySpecProp spname 59 target 39.226.198100
+ApplySpecProp spname 58 target 427459.367400
+ApplySpecProp spname 57 target 500079.871200
+ApplySpecProp spname 56 target 89006.685900
+ApplySpecProp spname 55 target 243883.237500
+ApplySpecProp spname 54 target 468028.368300
+ApplySpecProp spname 53 target 169070.131500
+ApplySpecProp spname 52 target 155033.8.2200
+ApplySpecProp spname 51 target 89030.327700
+ApplySpecProp spname 50 target 318174.520500
+ApplySpecProp spname 49 target 104724.585000
+ApplySpecProp spname 48 target 368487.565500
+ApplySpecProp spname 47 target 29375.061000
+ApplySpecProp spname 46 target 35519.023500
+ApplySpecProp spname 45 target 283312.187700
+ApplySpecProp spname 44 target .22341.510800
+ApplySpecProp spname 43 target 155473.118700
+ApplySpecProp spname 42 target 165662.766900
+ApplySpecProp spname 41 target 239177.7.2200
+ApplySpecProp spname 40 target 275413.348500
+ApplySpecProp spname 39 target 288601.143600
+ApplySpecProp spname 38 target 13826.648100
+ApplySpecProp spname 37 target 319742.580000
+ApplySpecProp spname 36 target 458283.555900
+ApplySpecProp spname 35 target 245314.982700
+ApplySpecProp spname 34 target 337275.576900
+ApplySpecProp spname 33 target 560196.461400
+ApplySpecProp spname 32 target 159476.424000
+ApplySpecProp spname 31 target 349070.932200
+ApplySpecProp spname 30 target 137001.246300
+ApplySpecProp spname 29 target 274709.489400
+ApplySpecProp spname 28 target 251728.038600
+ApplySpecProp spname 27 target 460014..22300
+ApplySpecProp spname 26 target 69570.522600
+ApplySpecProp spname 25 target 260419.863000
+ApplySpecProp spname 24 target 126763.098900
+ApplySpecProp spname 23 target 86010.769800
+ApplySpecProp spname 22 target 422461.184400
+ApplySpecProp spname.22 target 545829.111600
+ApplySpecProp spname 20 target 173170.250100
+ApplySpecProp spname 19 target 296245.152600
+ApplySpecProp spname 18 target 204652.005000
+ApplySpecProp spname 17 target 353520.291000
+ApplySpecProp spname 16 target 347324.737800
+ApplySpecProp spname 15 target 391729.340700
+ApplySpecProp spname 14 target 130771.664100
+ApplySpecProp spname 13 target 434467.771500
+ApplySpecProp spname 12 target 295467.906300
+ApplySpecProp spname 11 target 339634.499100
+ApplySpecProp spname 10 target 187075.444500
+ApplySpecProp spname 9 target 62845.938600
+ApplySpecProp spname 8 target 387504.372600
+ApplySpecProp spname 7 target 310666.479300
+ApplySpecProp spname 6 target 432048.051000
+ApplySpecProp spname 5 target 243560.482200
+ApplySpecProp spname 4 target 687665.419800
+ApplySpecProp spname 3 target 102266.293500
+ApplySpecProp spname 2 target 469667.641500
+ApplySpecProp spname 1 target 393125.975400
+after ApplySpecProp
+before OutputScenario
+after OutputScenario
+before CalcPenalties
