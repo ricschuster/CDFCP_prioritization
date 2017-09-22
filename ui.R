@@ -3,7 +3,16 @@ header <- dashboardHeader(
   title = "CDFCP conservation prioritization"
 )
 
-body <- dashboardBody(
+body <- dashboardBody(tags$head(tags$style(HTML('
+        .box { margin-bottom: 8px; } 
+        
+        [class*="col-lg-"],[class*="col-md-"],
+        [class*="col-sm-"],[class*="col-xs-"]{
+        padding-right:4px !important;
+        padding-left:4px !important;
+        }
+        '))),
+  
   fluidRow(
     column(width = 4,
            box(

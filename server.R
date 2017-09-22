@@ -398,15 +398,24 @@ shinyServer(function(input, output, session) {
   ###############################
   # Summary Table + Download Results raster
   ###############################
-  output$summary <- renderTable({ # to display in the "Summary" tab
-    if(input$mrun == 0) {
-      return(data.frame(Output="You need to run the prioritization first"))
-    }
+  output$summary <- renderDataTable(#{ # to display in the "Summary" tab
+    #if(input$mrun == 0) {
+    #  return(data.frame(Output="You need to run the prioritization first"))
+    #}
     
-    my.data()$res.fr
+    my.data()$res.fr,
+    extensions = 'FixedColumns',
+    rownames = FALSE,
+    options = list(dom = 'tipr', 
+                   autoWidth = TRUE,scrollX = TRUE,
+                   fixedColumns = list(leftColumns = 1)),
+    #bordered = TRUE,
+    width = "100%"
+    
     #data.frame(t(my.data()$res.fr))
 
-  })
+#  }
+  )
 
   output$downloadSHP <- downloadHandler(
 
@@ -454,7 +463,7 @@ shinyServer(function(input, output, session) {
     #tabs[[ii+3]] <- tabPanel("Tree Community",leafletOutput("TreeMapTool",height=1000))
     tabs[[ii+2]] <- tabPanel("Results + Download",
                              helpText(HTML("<h4>Result Summary Table</h4>")),
-                             tableOutput("summary"),
+                             dataTableOutput("summary"),
                              helpText(HTML("<br>")),
                              helpText(HTML("<h4>Results download (property selection):</h4>")),
                              downloadButton("download_selfr", label = "Property selection"),
