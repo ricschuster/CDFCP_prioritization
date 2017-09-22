@@ -1,4 +1,5 @@
 library(shiny)
+library(shinydashboard)
 library(shinyIncubator)
 library(ggplot2)
 library(sp)
@@ -124,21 +125,21 @@ names(scen)[(scen_col+1):ncol(scen)] <- feat.lst$name
 globWD <- setwd("./p")
 
 #load leaflet1 seem to set a seed, so set another one here
-set.seed(as.integer(Sys.time()))
-Gfold <- sprintf("%s",round(runif(1)*1000000))
+#set.seed(as.integer(Sys.time()))
+#Gfold <- sprintf("%s",round(runif(1)*1000000))
 
-dir.create(sprintf("%s/%s",getwd(),Gfold))
-for (ii in 1:100000){
-  if(!file.exists(sprintf("/mnt/shiny/%s",Gfold))) {
-    system(paste("mkdir ",sprintf("/mnt/shiny/%s",Gfold)))
-    break()
-  } else {
-    Gfold <- sprintf("%s",round(runif(1)*1000000))
-  }
-}
+#dir.create(sprintf("%s/%s",getwd(),Gfold))
+#for (ii in 1:100000){
+#  if(!file.exists(sprintf("/mnt/shiny/%s",Gfold))) {
+#    system(paste("mkdir ",sprintf("/mnt/shiny/%s",Gfold)))
+#    break()
+#  } else {
+#    Gfold <- sprintf("%s",round(runif(1)*1000000))
+#  }
+#}
 
-system(paste("cp -r ", "./files/." , sprintf("/mnt/shiny/%s",Gfold)))
-setwd(sprintf("/mnt/shiny/%s",Gfold))
-
+#system(paste("cp -r ", "./files/." , sprintf("/mnt/shiny/%s",Gfold)))
+#setwd(sprintf("/mnt/shiny/%s",Gfold))
+setwd("./files")
 
 
