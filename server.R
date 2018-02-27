@@ -99,11 +99,11 @@ shinyServer(function(input, output, session) {
   ## Multiple Scenarios
   #######################
   output$hot_multi = renderRHandsontable({
-    if (!is.null(input$hot_multi)) {
-      DF = hot_to_r(input$hot_multi)
-      values[["hot_multi"]] = DF  
-    } else if (!is.null(input$scen_file)){
+    if (!is.null(input$scen_file)){
       DF = read.csv(input$scen_file$datapath,stringsAsFactors =F)
+      values[["hot_multi"]] = DF  
+    } else if (!is.null(input$hot_multi)) {
+      DF = hot_to_r(input$hot_multi)
       values[["hot_multi"]] = DF  
     } else if (!is.null(values[["hot_multi"]])) {
       DF = values[["hot_multi"]]
