@@ -1,7 +1,5 @@
 library(tidyr)
 
-setwd("D:/VirtualBox/shared/UBC_VS/Shiny2/CDFCP.v0.22_full/")
-
 setwd("data")
 
 feat <- read.csv("CDFCP_Marxan_Feature_input.csv")

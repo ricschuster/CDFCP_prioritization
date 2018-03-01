@@ -367,7 +367,9 @@ shinyServer(function(input, output, session) {
           baseGroups = c("StreetMap", "Aerial", "Terrain"),
           overlayGroups = names(rst),
           options = layersControlOptions(collapsed = FALSE)
-          )
+          
+          ) %>%
+          addTiles(attribution = sprintf('<h5>Map created on %s via <a href="http://forbasin.forestry.ubc.ca/CDFCP_prioritization/" target="_blank">CDFCP conservation prioritization tool</a> developed by <a href="mailto:mail@richard-schuster.com">Richard Schuster</a> for the <a href="http://arcese.forestry.ubc.ca/marxan-tool-cdfcp/" target="_blank">Aecese Lab</a>.</h5>',Sys.Date())) 
 
     outl    
             # Overlay groups
@@ -458,7 +460,7 @@ shinyServer(function(input, output, session) {
       #tabs[[2]] <- tabPanel("Edit Trees", rHandsontableOutput("hot_tree"))
       ii <- 1
     }
-    tabs[[ii+1]] <- tabPanel("Input Layers",leafletOutput("InMap",height=900))
+    tabs[[ii+1]] <- tabPanel("Input Layers",leafletOutput("InMap",height=700))
     #tabs[[ii+2]] <- tabPanel("Tree Layers",leafletOutput("TreeMap",height=1000))
     #tabs[[ii+3]] <- tabPanel("Tree Community",leafletOutput("TreeMapTool",height=1000))
     tabs[[ii+2]] <- tabPanel("Results + Download",
@@ -474,7 +476,7 @@ shinyServer(function(input, output, session) {
                              helpText(HTML("<h4>Download the entire cadastral fabric:</h4>")),
                              downloadButton("downloadSHP",label = "Results download")
     )
-    tabs[[ii+3]] <- tabPanel("Result Map",leafletOutput("cadMap",height=900))
+    tabs[[ii+3]] <- tabPanel("Result Map",leafletOutput("cadMap",height=700))
     
     tabs$id <- "tabset2"
     do.call(tabsetPanel, tabs)

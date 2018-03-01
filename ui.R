@@ -1,6 +1,7 @@
 
 header <- dashboardHeader(
-  title = "CDFCP conservation prioritization"
+  title = "CDFCP conservation prioritization 0.30",
+  titleWidth = 450
 )
 
 body <- dashboardBody(tags$head(tags$style(HTML('

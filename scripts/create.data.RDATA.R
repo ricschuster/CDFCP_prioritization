@@ -1,7 +1,5 @@
 library(tidyr)
 
-setwd("D:/VirtualBox/shared/UBC_VS/Shiny2/CDFCP.v0.22_full/")
-
 setwd("data")
 
 pu_AreaHa_RoadD_AgrD <- read.csv("CDFCP_AreaHa_RoadD_AgrD.csv")
