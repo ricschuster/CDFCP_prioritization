@@ -31,7 +31,7 @@ feat.in <- leaflet() %>% addTiles() %>%
                         na.color = "transparent")
     feat.in <- addRasterImage(feat.in,rr[[ii]], colors=pal, opacity = 0.9, maxBytes = 8 * 1024 * 1024, 
                               group = strng[ii]) %>%
-      addLegend(pal = pal, values = rr[[ii]][], title = strng[ii], group = strng[ii])
+      addLegend(pal = pal, values = rr[[ii]][], title = strng[ii], group = strng[ii], position = "topleft")
   }
 
   feat.in <-    feat.in %>%
