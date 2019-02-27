@@ -75,12 +75,30 @@ body <- dashboardBody(tags$head(tags$style(HTML('
                       )
     ),
     column(width = 8,
-           box(
+           tabBox(
              title = "",
              # The id lets us use input$tabset1 on the server to find the current tab
-             id = "tabset2", width = NULL,height = "100%", #"600px",
-             uiOutput("tabsets"))
-           )
+             id = "toto", width = NULL,height = "100%", #"600px",
+             tabPanel("Edit Target", rHandsontableOutput("hot_feat")),
+             tabPanel("Scenario List", rHandsontableOutput("hot_multi",width="100%",height="500px")),
+             tabPanel("Input Layers",leafletOutput("InMap",height=700)),
+             tabPanel("Results + Download",
+                      helpText(HTML("<h4>Result Summary Table</h4>")),
+                      dataTableOutput("summary"),
+                      helpText(HTML("<br>")),
+                      helpText(HTML("<h4>Results download (property selection):</h4>")),
+                      downloadButton("download_selfr", label = "Property selection"),
+                      helpText(HTML("<br>")),
+                      helpText(HTML("<h4>Results download (summary of outputs):</h4>")),
+                      downloadButton("download_ssoln",label = "Results download"),
+                      helpText(HTML("<br>")),
+                      helpText(HTML("<h4>Download the entire cadastral fabric:</h4>")),
+                      downloadButton("downloadSHP",label = "Results download")
+             ),
+             tabPanel("Result Map",leafletOutput("cadMap",height=700))
+             
+             
+           ))
     )
   )
 

@@ -450,40 +450,40 @@ shinyServer(function(input, output, session) {
   )
 
   #Tabsets
-  output$tabsets <- renderUI({
-    tabs <- list(NULL)
-    if(input$MultiScen == TRUE){
-      tabs[[1]] <- tabPanel("Scenario List", rHandsontableOutput("hot_multi",width="100%",height="500px"))
-      ii <- 1
-    } else {
-      tabs[[1]] <- tabPanel("Edit Target", rHandsontableOutput("hot_feat"))
-      #tabs[[2]] <- tabPanel("Edit Trees", rHandsontableOutput("hot_tree"))
-      ii <- 1
-    }
-    tabs[[ii+1]] <- tabPanel("Input Layers",leafletOutput("InMap",height=700))
-    #tabs[[ii+2]] <- tabPanel("Tree Layers",leafletOutput("TreeMap",height=1000))
-    #tabs[[ii+3]] <- tabPanel("Tree Community",leafletOutput("TreeMapTool",height=1000))
-    tabs[[ii+2]] <- tabPanel("Results + Download",
-                             helpText(HTML("<h4>Result Summary Table</h4>")),
-                             dataTableOutput("summary"),
-                             helpText(HTML("<br>")),
-                             helpText(HTML("<h4>Results download (property selection):</h4>")),
-                             downloadButton("download_selfr", label = "Property selection"),
-                             helpText(HTML("<br>")),
-                             helpText(HTML("<h4>Results download (summary of outputs):</h4>")),
-                             downloadButton("download_ssoln",label = "Results download"),
-                             helpText(HTML("<br>")),
-                             helpText(HTML("<h4>Download the entire cadastral fabric:</h4>")),
-                             downloadButton("downloadSHP",label = "Results download")
-    )
-    tabs[[ii+3]] <- tabPanel("Result Map",leafletOutput("cadMap",height=700))
-    
-    tabs$id <- "tabset2"
-    do.call(tabsetPanel, tabs)
-    
-
-    
-  })  
+  # output$tabsets <- renderUI({
+  #   tabs <- list(NULL)
+  #   if(input$MultiScen == TRUE){
+  #     tabs[[1]] <- tabPanel("Scenario List", rHandsontableOutput("hot_multi",width="100%",height="500px"))
+  #     ii <- 1
+  #   } else {
+  #     tabs[[1]] <- tabPanel("Edit Target", rHandsontableOutput("hot_feat"))
+  #     #tabs[[2]] <- tabPanel("Edit Trees", rHandsontableOutput("hot_tree"))
+  #     ii <- 1
+  #   }
+  #   tabs[[ii+1]] <- tabPanel("Input Layers",leafletOutput("InMap",height=700))
+  #   #tabs[[ii+2]] <- tabPanel("Tree Layers",leafletOutput("TreeMap",height=1000))
+  #   #tabs[[ii+3]] <- tabPanel("Tree Community",leafletOutput("TreeMapTool",height=1000))
+  #   tabs[[ii+2]] <- tabPanel("Results + Download",
+  #                            helpText(HTML("<h4>Result Summary Table</h4>")),
+  #                            dataTableOutput("summary"),
+  #                            helpText(HTML("<br>")),
+  #                            helpText(HTML("<h4>Results download (property selection):</h4>")),
+  #                            downloadButton("download_selfr", label = "Property selection"),
+  #                            helpText(HTML("<br>")),
+  #                            helpText(HTML("<h4>Results download (summary of outputs):</h4>")),
+  #                            downloadButton("download_ssoln",label = "Results download"),
+  #                            helpText(HTML("<br>")),
+  #                            helpText(HTML("<h4>Download the entire cadastral fabric:</h4>")),
+  #                            downloadButton("downloadSHP",label = "Results download")
+  #   )
+  #   tabs[[ii+3]] <- tabPanel("Result Map",leafletOutput("cadMap",height=700))
+  #   
+  #   tabs$id <- "tabset2"
+  #   do.call(tabsetPanel, tabs)
+  #   
+  # 
+  #   
+  # })  
   
 
 })
