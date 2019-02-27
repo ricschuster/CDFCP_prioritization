@@ -16,6 +16,13 @@
 
 # Define server logic 
 shinyServer(function(input, output, session) {
+  
+  observe ({
+    if(input$MultiScen){
+      updateTabsetPanel(session, "out", "Scenario List")
+    }
+  })
+
   system(sprintf("touch %s/restart.txt",globWD))
   #  setwd("/var/shiny-server/www/examples/calib.shiny.v2/")
   values = reactiveValues(
@@ -448,6 +455,15 @@ shinyServer(function(input, output, session) {
       write.csv(my.data()$sel.fr, file, row.names=F)
     }
   )
+  
+  js$disableTab("rhmulti")
+  
+  observeEvent(input$MultiScen, {
+    # enable tab2 when clicking the button
+    js$enableTab("rhmulti")
+    # switch to tab2
+    updateTabsetPanel(session, "out", "toto")
+  })
 
   #Tabsets
   # output$tabsets <- renderUI({

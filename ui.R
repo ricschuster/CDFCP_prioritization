@@ -1,3 +1,29 @@
+jscode <- "
+shinyjs.disableTab = function(name) {
+var tab = $('.nav li a[data-value=' + name + ']');
+tab.bind('click.tab', function(e) {
+e.preventDefault();
+return false;
+});
+tab.addClass('disabled');
+}
+
+shinyjs.enableTab = function(name) {
+var tab = $('.nav li a[data-value=' + name + ']');
+tab.unbind('click.tab');
+tab.removeClass('disabled');
+}
+"
+
+css <- "
+.nav li a.disabled {
+background-color: #aaa !important;
+color: #333 !important;
+cursor: not-allowed !important;
+border-color: #aaa !important;
+}"
+
+
 
 header <- dashboardHeader(
   title = "CDFCP conservation prioritization 0.30",
@@ -15,11 +41,14 @@ body <- dashboardBody(tags$head(tags$style(HTML('
         '))),
   
   fluidRow(
+    useShinyjs(),
+    extendShinyjs(text = jscode),
+    inlineCSS(css),
     column(width = 4,
            box(
-             title = "",
+             title = "Inputs",
              # The id lets us use input$tabset1 on the server to find the current tab
-             id = "tabset1", width = NULL,height = "100%",#"600px", 
+             id = "in", width = NULL,height = "100%",#"600px", 
              actionButton("mrun",HTML("<h4>Run Optimization</h4>")), 
              helpText("================================="), 
              checkboxInput("MultiScen", "Run multiple scenarios"),
@@ -76,11 +105,11 @@ body <- dashboardBody(tags$head(tags$style(HTML('
     ),
     column(width = 8,
            tabBox(
-             title = "",
+             title = "Outputs",
              # The id lets us use input$tabset1 on the server to find the current tab
-             id = "toto", width = NULL,height = "100%", #"600px",
-             tabPanel("Edit Target", rHandsontableOutput("hot_feat")),
-             tabPanel("Scenario List", rHandsontableOutput("hot_multi",width="100%",height="500px")),
+             id = "out", width = NULL,height = "100%", #"600px",
+             tabPanel("Edit Target", id = "rhtarget", rHandsontableOutput("hot_feat")),
+             tabPanel("Scenario List", id = "rhmulti", rHandsontableOutput("hot_multi",width="100%",height="500px")),
              tabPanel("Input Layers",leafletOutput("InMap",height=700)),
              tabPanel("Results + Download",
                       helpText(HTML("<h4>Result Summary Table</h4>")),
