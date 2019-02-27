@@ -407,12 +407,12 @@ shinyServer(function(input, output, session) {
   ###############################
   # Summary Table + Download Results raster
   ###############################
-  output$summary <- DT::renderDataTable(#{ # to display in the "Summary" tab
+  output$summary <- DT::renderDT({#{ # to display in the "Summary" tab
     #if(input$mrun == 0) {
     #  return(data.frame(Output="You need to run the prioritization first"))
     #}
     
-    my.data()$res.fr,
+    datatable(my.data()$res.fr,
     extensions = 'FixedColumns',
     rownames = FALSE,
     options = list(dom = 'tipr', 
@@ -422,8 +422,9 @@ shinyServer(function(input, output, session) {
     width = "100%"
     
     #data.frame(t(my.data()$res.fr))
+    )
 
-#  }
+  }
   )
 
   output$downloadSHP <- downloadHandler(
