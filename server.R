@@ -407,7 +407,7 @@ shinyServer(function(input, output, session) {
   ###############################
   # Summary Table + Download Results raster
   ###############################
-  output$summary <- renderDataTable(#{ # to display in the "Summary" tab
+  output$summary <- DT::renderDataTable(#{ # to display in the "Summary" tab
     #if(input$mrun == 0) {
     #  return(data.frame(Output="You need to run the prioritization first"))
     #}

@@ -113,7 +113,7 @@ body <- dashboardBody(tags$head(tags$style(HTML('
              tabPanel("Input Layers",leafletOutput("InMap",height=700)),
              tabPanel("Results + Download",
                       helpText(HTML("<h4>Result Summary Table</h4>")),
-                      dataTableOutput("summary"),
+                      DT::dataTableOutput("summary"),
                       helpText(HTML("<br>")),
                       helpText(HTML("<h4>Results download (property selection):</h4>")),
                       downloadButton("download_selfr", label = "Property selection"),
