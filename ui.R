@@ -1,28 +1,3 @@
-jscode <- "
-shinyjs.disableTab = function(name) {
-var tab = $('.nav li a[data-value=' + name + ']');
-tab.bind('click.tab', function(e) {
-e.preventDefault();
-return false;
-});
-tab.addClass('disabled');
-}
-
-shinyjs.enableTab = function(name) {
-var tab = $('.nav li a[data-value=' + name + ']');
-tab.unbind('click.tab');
-tab.removeClass('disabled');
-}
-"
-
-css <- "
-.nav li a.disabled {
-background-color: #aaa !important;
-color: #333 !important;
-cursor: not-allowed !important;
-border-color: #aaa !important;
-}"
-
 
 
 header <- dashboardHeader(
@@ -41,9 +16,6 @@ body <- dashboardBody(tags$head(tags$style(HTML('
         '))),
   
   fluidRow(
-    useShinyjs(),
-    extendShinyjs(text = jscode),
-    inlineCSS(css),
     column(width = 4,
            box(
              title = "Inputs",
@@ -113,7 +85,8 @@ body <- dashboardBody(tags$head(tags$style(HTML('
              tabPanel("Input Layers",leafletOutput("InMap",height=700)),
              tabPanel("Results + Download",
                       helpText(HTML("<h4>Result Summary Table</h4>")),
-                      DTOutput("summary"),
+                      dataTableOutput("summary"),
+                      #DTOutput("summary"),
                       helpText(HTML("<br>")),
                       helpText(HTML("<h4>Results download (property selection):</h4>")),
                       downloadButton("download_selfr", label = "Property selection"),

@@ -1,5 +1,5 @@
 library(shiny)
-library(shinyjs)
+#library(shinyjs)
 library(shinydashboard)
 library(shinyIncubator)
 library(ggplot2)

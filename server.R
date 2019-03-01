@@ -164,9 +164,9 @@ shinyServer(function(input, output, session) {
       progress$set(message = 'Setting up Analysis inputs', detail = "Please be patient...", value = 0.01)
 
       #setup output frames
-      sel.fr <- data.frame(id=cost[["dollar"]]$id)
-      sel.fr.rast <- data.frame(id=idx.r.val[!is.na(idx.r.val)])
-      res.fr <- data.frame(scen=character(),
+      sel.fr <- tibble(id=cost[["dollar"]]$id)
+      sel.fr.rast <- tibble(id=idx.r.val[!is.na(idx.r.val)])
+      res.fr <- tibble(scen=character(),
                            #time=character(),
                            cost=character(),
                            protected=character(),
@@ -174,9 +174,11 @@ shinyServer(function(input, output, session) {
                            minPropSz=numeric(),
                            maxAgrDns=numeric(),
                           # FTcutoff=integer(),
-                           status=character(),runtime=numeric(),cost_out=numeric(),
+                           status=character(),
+                           runtime=numeric(),
+                           cost_out=numeric(),
                            cost_dollar=numeric(),
-                           area=numeric(),stringsAsFactors=F)
+                           area=numeric())
 
       in_col <- ncol(res.fr)
       for(kk in (in_col+1):(in_col+ncol(puvsf[["curr"]])-1))
@@ -219,7 +221,7 @@ shinyServer(function(input, output, session) {
        # }
         
         #feat.temp <- sprintf("NPLCC_comm_feature_input_%s.csv",scale_temp)
-        feat.temp <- data.frame(id=seq(1,ncol(puvsfeat.temp[,-1])),
+        feat.temp <- tibble(id=seq(1,ncol(puvsfeat.temp[,-1])),
                                 Percent=as.numeric(unlist(scen[ii,(scen_col+1):ncol(scen)])),
                                 name=names(puvsfeat.temp[,-1]),
                                 stringsAsFactors =F)
@@ -243,7 +245,7 @@ shinyServer(function(input, output, session) {
         sel.fr <- cbind(sel.fr,result$x)
 
         #sel.fr.rast
-        tmp.fr <- data.frame(cad_id=sel.fr[,1],xx=result$x)
+        tmp.fr <- tibble(cad_id=sel.fr[,1],xx=result$x)
         sel.cad <- tmp.fr$cad_id[tmp.fr$xx == 1]
         sel.1ha <- unique(cad_1ha_isect$id[cad_1ha_isect$cad_id %in% sel.cad])
         tmp.x <- rep(0,length(sel.fr.rast[,1]))
@@ -288,7 +290,7 @@ shinyServer(function(input, output, session) {
       if (raster.on){
         r <- in.raster
         rv <- getValues(r)
-        ind.r.v <- data.frame(id=idx.r.val[!is.na(idx.r.val)])
+        ind.r.v <- tibble(id=idx.r.val[!is.na(idx.r.val)])
 
         res <- join(ind.r.v,sel.fr.rast,by="id")
 
@@ -306,7 +308,7 @@ shinyServer(function(input, output, session) {
         #leaflet rasters
         rL <- in.rasterL
         rvL <- getValues(rL)
-        ind.r.vL <- data.frame(id=idx.r.valL[!is.na(idx.r.valL)])
+        ind.r.vL <- tibble(id=idx.r.valL[!is.na(idx.r.valL)])
 
         resL <- join(ind.r.vL,sel.fr.rast,by="id")
 
@@ -407,25 +409,29 @@ shinyServer(function(input, output, session) {
   ###############################
   # Summary Table + Download Results raster
   ###############################
-  output$summary <- DT::renderDT({#{ # to display in the "Summary" tab
-    #if(input$mrun == 0) {
-    #  return(data.frame(Output="You need to run the prioritization first"))
-    #}
-    
-    datatable(my.data()$res.fr,
-    extensions = 'FixedColumns',
-    rownames = FALSE,
-    options = list(dom = 'tipr', 
-                   autoWidth = TRUE,scrollX = TRUE,
-                   fixedColumns = list(leftColumns = 1)),
-    #bordered = TRUE,
-    width = "100%"
-    
-    #data.frame(t(my.data()$res.fr))
-    )
-
-  }
-  )
+  output$summary <- renderDataTable(my.data()$res.fr,
+                                    options = list(dom = 'tipr', 
+                                                   autoWidth = TRUE,scrollX = TRUE,
+                                                   fixedColumns = list(leftColumns = 1)))
+  #                   DT::renderDT({#{ # to display in the "Summary" tab
+  #   #if(input$mrun == 0) {
+  #   #  return(tibble(Output="You need to run the prioritization first"))
+  #   #}
+  #   
+  #   datatable(my.data()$res.fr,
+  #   extensions = 'FixedColumns',
+  #   rownames = FALSE,
+  #   options = list(dom = 'tipr', 
+  #                  autoWidth = TRUE,scrollX = TRUE,
+  #                  fixedColumns = list(leftColumns = 1)),
+  #   #bordered = TRUE,
+  #   width = "100%"
+  #   
+  #   #tibble(t(my.data()$res.fr))
+  #   )
+  # 
+  # }
+  # )
 
   output$downloadSHP <- downloadHandler(
 
@@ -457,14 +463,6 @@ shinyServer(function(input, output, session) {
     }
   )
   
-  js$disableTab("rhmulti")
-  
-  observeEvent(input$MultiScen, {
-    # enable tab2 when clicking the button
-    js$enableTab("rhmulti")
-    # switch to tab2
-    updateTabsetPanel(session, "out", "toto")
-  })
 
   #Tabsets
   # output$tabsets <- renderUI({
