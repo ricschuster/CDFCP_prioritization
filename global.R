@@ -18,9 +18,9 @@ library(Matrix)
 library(plyr)
 library(dplyr)
 library(tidyr)
-library(gurobi)
+#library(gurobi)
 library(DT)
-#library(Rsymphony)
+library(Rsymphony)
 
 
 ### Source R scripts
