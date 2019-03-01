@@ -81,7 +81,8 @@ body <- dashboardBody(tags$head(tags$style(HTML('
              # The id lets us use input$tabset1 on the server to find the current tab
              id = "out", width = NULL,height = "100%", #"600px",
              tabPanel("Edit Target", id = "rhtarget", rHandsontableOutput("hot_feat")),
-             tabPanel("Scenario List", id = "rhmulti", rHandsontableOutput("hot_multi",width="100%",height="500px")),
+             #tabPanel("Scenario List", id = "rhmulti", rHandsontableOutput("hot_multi",width="100%",height="500px")),
+             tabPanel("Scenario List", id = "multis", dataTableOutput("multis")),
              tabPanel("Input Layers",leafletOutput("InMap",height=700)),
              tabPanel("Results + Download",
                       helpText(HTML("<h4>Result Summary Table</h4>")),

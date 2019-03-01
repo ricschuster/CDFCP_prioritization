@@ -43,6 +43,15 @@ shinyServer(function(input, output, session) {
      #    tree = df2,
          multi = df3)
   })
+  
+  calc_mult <- reactive({
+    if (!is.null(input$scen_file)){
+      DF <- read.csv(input$scen_file$datapath,stringsAsFactors =F)
+    } else {
+      DF <- scen
+    }
+    list(mult = DF)
+  })
 
   #######################
   ## Edit Targets
@@ -106,15 +115,15 @@ shinyServer(function(input, output, session) {
   ## Multiple Scenarios
   #######################
   output$hot_multi = renderRHandsontable({
-    if (!is.null(input$scen_file)){
-      DF = read.csv(input$scen_file$datapath,stringsAsFactors =F)
-      values[["hot_multi"]] = DF  
-    } else if (!is.null(input$hot_multi)) {
-      DF = hot_to_r(input$hot_multi)
-      values[["hot_multi"]] = DF  
-    } else if (!is.null(values[["hot_multi"]])) {
-      DF = values[["hot_multi"]]
-    }
+    # if (!is.null(input$scen_file)){
+    #   DF = read.csv(input$scen_file$datapath,stringsAsFactors =F)
+    #   values[["hot_multi"]] = DF  
+    # } else if (!is.null(input$hot_multi)) {
+    #   DF = hot_to_r(input$hot_multi)
+    #   values[["hot_multi"]] = DF  
+    # } else if (!is.null(values[["hot_multi"]])) {
+    #   DF = values[["hot_multi"]]
+    # }
     
     rhandsontable(DF, readOnly = F) %>%
 #      hot_table(highlightCol = TRUE, highlightRow = TRUE) %>%
@@ -154,7 +163,7 @@ shinyServer(function(input, output, session) {
         scen[1,] <- c(scnm,input$cost,input$protected,input$RoadD,input$AreaHa,input$AgrD,feat.temp$Percent)
 #        scen[1,] <- c(scnm,input$time,input$cost,input$protected,input$FTcutoff,feat.temp$Percent)
       } else {
-        scen <- calc()$multi
+        scen <- calc_mult()$mult
       }
       
       #debug
@@ -164,8 +173,8 @@ shinyServer(function(input, output, session) {
       progress$set(message = 'Setting up Analysis inputs', detail = "Please be patient...", value = 0.01)
 
       #setup output frames
-      sel.fr <- tibble(id=cost[["dollar"]]$id)
-      sel.fr.rast <- tibble(id=idx.r.val[!is.na(idx.r.val)])
+      sel.fr <- data.frame(id=cost[["dollar"]]$id)
+      sel.fr.rast <- data.frame(id=idx.r.val[!is.na(idx.r.val)])
       res.fr <- tibble(scen=character(),
                            #time=character(),
                            cost=character(),
@@ -221,7 +230,7 @@ shinyServer(function(input, output, session) {
        # }
         
         #feat.temp <- sprintf("NPLCC_comm_feature_input_%s.csv",scale_temp)
-        feat.temp <- tibble(id=seq(1,ncol(puvsfeat.temp[,-1])),
+        feat.temp <- data.frame(id=seq(1,ncol(puvsfeat.temp[,-1])),
                                 Percent=as.numeric(unlist(scen[ii,(scen_col+1):ncol(scen)])),
                                 name=names(puvsfeat.temp[,-1]),
                                 stringsAsFactors =F)
@@ -245,7 +254,7 @@ shinyServer(function(input, output, session) {
         sel.fr <- cbind(sel.fr,result$x)
 
         #sel.fr.rast
-        tmp.fr <- tibble(cad_id=sel.fr[,1],xx=result$x)
+        tmp.fr <- data.frame(cad_id=sel.fr[,1],xx=result$x)
         sel.cad <- tmp.fr$cad_id[tmp.fr$xx == 1]
         sel.1ha <- unique(cad_1ha_isect$id[cad_1ha_isect$cad_id %in% sel.cad])
         tmp.x <- rep(0,length(sel.fr.rast[,1]))
@@ -290,7 +299,7 @@ shinyServer(function(input, output, session) {
       if (raster.on){
         r <- in.raster
         rv <- getValues(r)
-        ind.r.v <- tibble(id=idx.r.val[!is.na(idx.r.val)])
+        ind.r.v <- data.frame(id=idx.r.val[!is.na(idx.r.val)])
 
         res <- join(ind.r.v,sel.fr.rast,by="id")
 
@@ -308,7 +317,7 @@ shinyServer(function(input, output, session) {
         #leaflet rasters
         rL <- in.rasterL
         rvL <- getValues(rL)
-        ind.r.vL <- tibble(id=idx.r.valL[!is.na(idx.r.valL)])
+        ind.r.vL <- data.frame(id=idx.r.valL[!is.na(idx.r.valL)])
 
         resL <- join(ind.r.vL,sel.fr.rast,by="id")
 
@@ -406,6 +415,14 @@ shinyServer(function(input, output, session) {
     
   })  
 
+  
+  ###############################
+  # Multi scenario table
+  ###############################
+  output$multis <- renderDataTable(calc_mult()$mult,
+                                    options = list(dom = 'tipr', 
+                                                   autoWidth = TRUE,scrollX = TRUE,
+                                                   fixedColumns = list(leftColumns = 1)))
   ###############################
   # Summary Table + Download Results raster
   ###############################
@@ -415,7 +432,7 @@ shinyServer(function(input, output, session) {
                                                    fixedColumns = list(leftColumns = 1)))
   #                   DT::renderDT({#{ # to display in the "Summary" tab
   #   #if(input$mrun == 0) {
-  #   #  return(tibble(Output="You need to run the prioritization first"))
+  #   #  return(data.frame(Output="You need to run the prioritization first"))
   #   #}
   #   
   #   datatable(my.data()$res.fr,
@@ -427,7 +444,7 @@ shinyServer(function(input, output, session) {
   #   #bordered = TRUE,
   #   width = "100%"
   #   
-  #   #tibble(t(my.data()$res.fr))
+  #   #data.frame(t(my.data()$res.fr))
   #   )
   # 
   # }
