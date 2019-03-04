@@ -1,6 +1,5 @@
 library(sp)
 library(raster)
-library(spatial.tools)
 library(leaflet)
 
 owd <- setwd("pulayer/rast")

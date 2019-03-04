@@ -1,0 +1,3 @@
+Rscript start.R
+
+PAUSE

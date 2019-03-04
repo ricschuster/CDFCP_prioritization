@@ -53,7 +53,7 @@ fit.gurobi <- function(pu="",puvsfeat="",feat=""){
   {
     puvsfeat$Prot <- ifelse(pu$status==2,1,0)
 
-    sense[idx2] <- "="
+    sense[idx2] <- "=="
     rhs[idx2] <- iReservedCount
     idx2 <- idx2 + 1
   }
@@ -65,7 +65,7 @@ fit.gurobi <- function(pu="",puvsfeat="",feat=""){
   {
     puvsfeat$Excl <- ifelse(pu$status==3,1,0)
     
-    sense[idx2] <- "="
+    sense[idx2] <- "=="
     rhs[idx2] <- 0
     idx2 <- idx2 + 1
   }
@@ -87,7 +87,7 @@ fit.gurobi <- function(pu="",puvsfeat="",feat=""){
     }
   }
   
-  #sense <- "=" # note = might be problematic because strict equality might fail
+  #sense <- "==" # note = might be problematic because strict equality might fail
   #             # due to a slight rounding error
   #             # best to reformulate for inequality
   
@@ -122,15 +122,15 @@ fit.gurobi <- function(pu="",puvsfeat="",feat=""){
   
   # run Gurobi
   params <- list(Presolve=2,TimeLimit=1000)
-  result <- gurobi(model,params)
+  #result <- gurobi(model,params)
   
   # run Rsymphony on server
-  #bounds <- list(lower = list(ind = seq(1:length(pu$cost)), val = rep(0,length(pu$cost))),
-  #               upper = list(ind = seq(1:length(pu$cost)), val = rep(1,length(pu$cost))))
-  #tm <- system.time(result <- Rsymphony_solve_LP(pu$cost, as.matrix(constr), sense, rhs, bounds, types="B",first_feasible=T,verbosity=1))
+  bounds <- list(lower = list(ind = seq(1:length(pu$cost)), val = rep(0,length(pu$cost))),
+                 upper = list(ind = seq(1:length(pu$cost)), val = rep(1,length(pu$cost))))
+  tm <- system.time(result <- Rsymphony_solve_LP(pu$cost, as.matrix(constr), sense, rhs, bounds, types="B",first_feasible=T,verbosity=1))
   
-  #result$runtime <- tm[[3]]
-  #result$x <- result$solution
+  result$runtime <- tm[[3]]
+  result$x <- result$solution
   
   print(result$status)
   

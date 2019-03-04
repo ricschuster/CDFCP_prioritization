@@ -17,13 +17,17 @@
 # Define server logic 
 shinyServer(function(input, output, session) {
   
+  session$onSessionEnded(function() {
+    stopApp()
+  })
+  
   observe ({
     if(input$MultiScen){
       updateTabsetPanel(session, "out", "Scenario List")
     }
   })
 
-  system(sprintf("touch %s/restart.txt",globWD))
+  #system(sprintf("touch %s/restart.txt",globWD))
   #  setwd("/var/shiny-server/www/examples/calib.shiny.v2/")
   values = reactiveValues(
     hot_feat = feat.lst,
@@ -202,7 +206,7 @@ shinyServer(function(input, output, session) {
       #scenario loop
       for (ii in 1:nrow(scen)){
 
-        pu_temp <- cost[[scen$cost[ii]]]
+        pu_temp <- pu
         
         if(scen$protected[ii] == "locked"){
           pu_temp$status <- prot$Prot
@@ -220,29 +224,29 @@ shinyServer(function(input, output, session) {
           pu_temp$status <- ifelse(pu_temp$status == 2, 2,pu_AreaHa_RoadD_AgrD$excl )
         }
         
-        puvsfeat.temp <- puvsf[["curr"]]
-        #prepare feat for cutoff
-       # if (scen$FTcutoff[ii] > 0) {
-          #colMax <-  sapply(puvsfeat.temp[,-1], max, na.rm = TRUE)
-          #puvsfeat.temp[,-1] <- as.matrix(puvsfeat.temp[,-1]) %*% diag(1/colMax)
-          #      FTcutoff <- 0.7
-       #   puvsfeat.temp[puvsfeat.temp < (as.numeric(scen$FTcutoff[ii])/100)] <- 0
-       # }
         
-        #feat.temp <- sprintf("NPLCC_comm_feature_input_%s.csv",scale_temp)
-        feat.temp <- data.frame(id=seq(1,ncol(puvsfeat.temp[,-1])),
-                                Percent=as.numeric(unlist(scen[ii,(scen_col+1):ncol(scen)])),
-                                name=names(puvsfeat.temp[,-1]),
-                                stringsAsFactors =F)
-        
-        #debug
-        #write.csv(feat.temp,sprintf("./output/feat.temp_%s.csv",ii),row.names = F)
         
         progress$set(message = 'Calculation in progress', detail = sprintf("Scenario %s/%s",ii,nrow(scen)), 
                      value = round(ii/nrow(scen)*0.8,1))
         
-        result <- fit.gurobi(pu=pu_temp, puvsfeat=puvsfeat.temp, feat=feat.temp)      
-
+        prob.ta <- problem(pu.tmp, feat, rij, cost_column = "cost") %>%
+          add_min_set_objective() %>%
+          add_binary_decisions() %>% 
+          add_relative_targets(as.numeric(unlist(scen[ii,(scen_col+1):ncol(scen)]))/100)
+        
+        if(any(pu_temp$status ==2)){
+          prob.ta <- prob.ta %>%
+            add_locked_in_constraints(pu_temp$status ==2)
+        }
+        
+        
+        if(any(pu_temp$status ==3)){
+          prob.ta <- prob.ta %>%
+            add_locked_out_constraints(pu_temp$status ==3)
+        }
+        
+        result <- solve(prob.ta)
+        
         if (input$MultiScen == FALSE) {
           scnm <- paste0(substr(as.character(scen$cost[ii]),1,1),
                        substr(as.character(scen$protected[ii]),1,1))
@@ -251,10 +255,10 @@ shinyServer(function(input, output, session) {
           scnm <- scen$scenario[ii]
         }  
         
-        sel.fr <- cbind(sel.fr,result$x)
+        sel.fr <- cbind(sel.fr,result$solution_1)
 
         #sel.fr.rast
-        tmp.fr <- data.frame(cad_id=sel.fr[,1],xx=result$x)
+        tmp.fr <- data.frame(cad_id=sel.fr[,1],xx=result$solution_1)
         sel.cad <- tmp.fr$cad_id[tmp.fr$xx == 1]
         sel.1ha <- unique(cad_1ha_isect$id[cad_1ha_isect$cad_id %in% sel.cad])
         tmp.x <- rep(0,length(sel.fr.rast[,1]))
@@ -279,14 +283,14 @@ shinyServer(function(input, output, session) {
                          scen$minPropSz[ii],
                          scen$maxAgrDns[ii],
 #                         scen$FTcutoff[ii],
-                         result$status,
-                         round(result$runtime,0), 
-                         round(result$objval,0),
+                         attributes(result)$status[[1]],
+                         round(attributes(result)$runtime[[1]],0), 
+                         round(attributes(result)$objective[[1]],0),
                          cst_doll,
-                         round(sum(result$x>0)/length(result$x)*100,2),
-                         round(colSums(puvsfeat.temp[result$x>0,-1])/
-                         colSums(puvsfeat.temp[,-1])*100,2),
-                         feat.temp$Percent
+                         round(sum(result$solution_1>0)/length(result$solution_1)*100,2),
+                         round(colSums(features.df[result$solution_1>0,])/
+                         colSums(features.df)*100,2),
+                         as.numeric(unlist(scen[ii,(scen_col+1):ncol(scen)]))
                          ) 
         rm(cst.tmp,cst_doll)
       }

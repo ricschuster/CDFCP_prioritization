@@ -1,7 +1,7 @@
 
 
 header <- dashboardHeader(
-  title = "CDFCP conservation prioritization 0.30",
+  title = "CDFCP conservation prioritization 0.40",
   titleWidth = 450
 )
 
