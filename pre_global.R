@@ -23,18 +23,9 @@ library(DT)
 library(Rsymphony)
 
 
-### Source R scripts
-source("./scripts/helper.functions.R")
-source("./scripts/fit.gurobi.R")
-source("./scripts/marxan.R")
-
 ### Load Workspaces
 load("./RData/feature_input.RData")
 load("./RData/leaflet1.RData")
-#load("./RData/tree_input.RData")
-#load("./RData/trees_curr.RData")
-#load("./RData/trees_rcp45.RData")
-#load("./RData/trees_rcp85.RData")
 
 ### Load rasters
 in.raster <- raster(paste0(getwd(),"/pulayer/idx.tif"))
