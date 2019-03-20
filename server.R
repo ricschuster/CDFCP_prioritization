@@ -426,7 +426,8 @@ shinyServer(function(input, output, session) {
   output$multis <- renderDataTable(calc_mult()$mult,
                                     options = list(dom = 'tipr', 
                                                    autoWidth = TRUE,scrollX = TRUE,
-                                                   fixedColumns = list(leftColumns = 1)))
+                                                   fixedColumns = list(leftColumns = 1),
+                                                   searching = FALSE))
   ###############################
   # Summary Table + Download Results raster
   ###############################

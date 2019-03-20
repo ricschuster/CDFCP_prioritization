@@ -19,7 +19,7 @@ library(plyr)
 library(dplyr)
 library(tidyr)
 #library(gurobi)
-library(DT)
+#library(DT)
 if(!require(gurobi)){
   require(Rsymphony)
 }
