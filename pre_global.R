@@ -19,7 +19,6 @@ library(plyr)
 library(dplyr)
 library(tidyr)
 #library(gurobi)
-library(DT)
 library(Rsymphony)
 
 
