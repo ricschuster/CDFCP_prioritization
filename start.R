@@ -28,6 +28,9 @@ if(!require(leaflet)){
   devtools::install_github('rstudio/leaflet')
 }
 
+if(!require(shinyIncubator)){
+  devtools::install_github("rstudio/shiny-incubator")
+}
 
 library(shiny)
 runApp(launch.browser=TRUE)
