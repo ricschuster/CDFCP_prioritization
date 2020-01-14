@@ -229,7 +229,7 @@ shinyServer(function(input, output, session) {
         progress$set(message = 'Calculation in progress', detail = sprintf("Scenario %s/%s",ii,nrow(scen)), 
                      value = round(ii/nrow(scen)*0.8,1))
         
-        prob.ta <- problem(pu.tmp, feat, rij, cost_column = "cost", run_checks = FALSE) %>%
+        prob.ta <- problem(pu.tmp, feat, rij, cost_column = "cost") %>%
           add_min_set_objective() %>%
           add_binary_decisions() %>% 
           add_relative_targets(as.numeric(unlist(scen[ii,(scen_col+1):ncol(scen)]))/100)
@@ -245,7 +245,7 @@ shinyServer(function(input, output, session) {
             add_locked_out_constraints(pu_temp$status ==3)
         }
         
-        result <- solve(prob.ta, force = TRUE)
+        result <- prioritizr::solve(prob.ta, force = TRUE)
         
         if (input$MultiScen == FALSE) {
           scnm <- paste0(substr(as.character(scen$cost[ii]),1,1),
@@ -423,15 +423,15 @@ shinyServer(function(input, output, session) {
   ###############################
   # Multi scenario table
   ###############################
-  output$multis <- renderDataTable(calc_mult()$mult,
-                                    options = list(dom = 'tipr', 
+  output$multis <- DT::renderDataTable(calc_mult()$mult,
+                                    options = list(dom = 'tipr',
                                                    autoWidth = TRUE,scrollX = TRUE,
                                                    fixedColumns = list(leftColumns = 1),
                                                    searching = FALSE))
   ###############################
   # Summary Table + Download Results raster
   ###############################
-  output$summary <- renderDataTable(my.data()$res.fr,
+  output$summary <- DT::renderDataTable(my.data()$res.fr,
                                     options = list(dom = 'tipr', 
                                                    autoWidth = TRUE,scrollX = TRUE,
                                                    fixedColumns = list(leftColumns = 1)))
