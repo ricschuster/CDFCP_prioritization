@@ -275,23 +275,23 @@ shinyServer(function(input, output, session) {
         cst_doll <- round(sum(cst.tmp[result$x>0]),0)
 
         ## CALC HERE round(sum(cost$dollar$cost[result$x>0]),0)
-        res.fr[ii,] <- c(scnm, 
+        res.fr[ii,] <- c(list(scnm, 
                          #scen$time[ii],
                          scen$cost[ii],
                          scen$protected[ii],
                          scen$maxRoadDns[ii],
                          scen$minPropSz[ii],
                          scen$maxAgrDns[ii],
-#                         scen$FTcutoff[ii],
+#                         scen$FTcutoff[ii],  
                          attributes(result)$status[[1]],
                          round(attributes(result)$runtime[[1]],0), 
                          round(attributes(result)$objective[[1]],0),
                          cst_doll,
-                         round(sum(result$solution_1>0)/length(result$solution_1)*100,2),
-                         round(colSums(features.df[result$solution_1>0,])/
-                         colSums(features.df)*100,2),
-                         as.numeric(unlist(scen[ii,(scen_col+1):ncol(scen)]))
-                         ) 
+                         round(sum(result$solution_1>0)/length(result$solution_1)*100,2)),
+                         as.list(round(colSums(features.df[result$solution_1>0,])/
+                         colSums(features.df)*100,2)),
+                         as.list(as.numeric(unlist(scen[ii,(scen_col+1):ncol(scen)])))
+                         )
         rm(cst.tmp,cst_doll)
       }
       
