@@ -1,0 +1,171 @@
+name: CDFCP example
+mode: advanced
+user_groups: public
+spatial_path: CDFCP_spatial.tif
+attribute_path: CDFCP_attribute.csv.gz
+boundary_path: CDFCP_boundary.csv.gz
+themes:
+- name: Biodiversity
+  feature:
+  - name: Old_Forest
+    variable:
+      index: Old_Forest
+      units: ''
+      legend:
+        type: categorical
+        colors:
+        - '#00000000'
+        - '#e41a1c'
+      provenance: missing
+    status: yes
+    visible: yes
+    hidden: no
+    goal: 0.2
+    limit_goal: 0.0
+  - name: Savannah
+    variable:
+      index: Savannah
+      units: ''
+      legend:
+        type: categorical
+        colors:
+        - '#00000000'
+        - '#377eb8'
+      provenance: missing
+    status: yes
+    visible: no
+    hidden: no
+    goal: 0.2
+    limit_goal: 0.0
+  - name: Beta_Diversity
+    variable:
+      index: Beta_Diversity
+      units: ''
+      legend:
+        type: categorical
+        colors:
+        - '#00000000'
+        - '#4daf4a'
+      provenance: missing
+    status: yes
+    visible: no
+    hidden: no
+    goal: 0.2
+    limit_goal: 0.0
+  - name: Shrub
+    variable:
+      index: Shrub
+      units: ''
+      legend:
+        type: categorical
+        colors:
+        - '#00000000'
+        - '#984ea3'
+      provenance: missing
+    status: yes
+    visible: no
+    hidden: no
+    goal: 0.2
+    limit_goal: 0.0
+  - name: Wetland
+    variable:
+      index: Wetland
+      units: ''
+      legend:
+        type: categorical
+        colors:
+        - '#00000000'
+        - '#ff7f00'
+      provenance: missing
+    status: yes
+    visible: no
+    hidden: no
+    goal: 0.2
+    limit_goal: 0.0
+weights:
+- name: Assessed_value_dollars
+  variable:
+    index: Assessed_value_dollars
+    units: ''
+    legend:
+      type: continuous
+      colors:
+      - '#000004FF'
+      - '#56106EFF'
+      - '#BB3754FF'
+      - '#F98C0AFF'
+      - '#FCFFA4FF'
+    provenance: missing
+  status: yes
+  visible: no
+  hidden: no
+  factor: 0.0
+- name: Human_association
+  variable:
+    index: Human_association
+    units: ''
+    legend:
+      type: continuous
+      colors:
+      - '#440154FF'
+      - '#3B528BFF'
+      - '#21908CFF'
+      - '#5DC863FF'
+      - '#FDE725FF'
+    provenance: missing
+  status: yes
+  visible: no
+  hidden: no
+  factor: 0.0
+- name: Standing_Carbon
+  variable:
+    index: Standing_Carbon
+    units: ''
+    legend:
+      type: continuous
+      colors:
+      - '#440154FF'
+      - '#3B528BFF'
+      - '#21908CFF'
+      - '#5DC863FF'
+      - '#FDE725FF'
+    provenance: missing
+  status: yes
+  visible: no
+  hidden: no
+  factor: 0.0
+- name: Carbon_Potential
+  variable:
+    index: Carbon_Potential
+    units: ''
+    legend:
+      type: continuous
+      colors:
+      - '#440154FF'
+      - '#3B528BFF'
+      - '#21908CFF'
+      - '#5DC863FF'
+      - '#FDE725FF'
+    provenance: missing
+  status: yes
+  visible: no
+  hidden: no
+  factor: 0.0
+includes:
+- name: Protected Areas
+  variable:
+    index: Protected_Areas
+    units: ''
+    legend:
+      type: manual
+      colors:
+      - '#00000000'
+      - '#006d2c'
+      labels:
+      - not included
+      - include
+    provenance: missing
+  mandatory: no
+  status: yes
+  visible: no
+  hidden: no
