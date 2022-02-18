@@ -27,6 +27,10 @@ PA <- fasterize::fasterize(PA_shp, in.raster, field = "dummy") %>%
   mask(., in.raster)
 names(PA) <- "Protected_Areas"
 
+PA.val <- PA[]
+PA.val[!is.na(in.raster[])] <- ifelse(!is.na(PA.val[!is.na(in.raster[])]), 1, 0)
+PA[] <- PA.val
+
 fls <- list.files("pulayer/rast/", pattern = "*.tif$", full.names = TRUE)
 rstk <- stack(fls) %>%
   projectRaster(crs = methods::as(sf::st_crs(3857), "CRS"), method = "ngb")

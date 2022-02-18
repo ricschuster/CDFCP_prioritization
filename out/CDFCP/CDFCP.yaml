@@ -12,10 +12,13 @@ themes:
       index: Old_Forest
       units: ''
       legend:
-        type: categorical
+        type: continuous
         colors:
-        - '#00000000'
-        - '#e41a1c'
+        - '#440154FF'
+        - '#3B528BFF'
+        - '#21908CFF'
+        - '#5DC863FF'
+        - '#FDE725FF'
       provenance: missing
     status: yes
     visible: yes
@@ -27,10 +30,13 @@ themes:
       index: Savannah
       units: ''
       legend:
-        type: categorical
+        type: continuous
         colors:
-        - '#00000000'
-        - '#377eb8'
+        - '#000004FF'
+        - '#51127CFF'
+        - '#B63679FF'
+        - '#FB8861FF'
+        - '#FCFDBFFF'
       provenance: missing
     status: yes
     visible: no
@@ -42,10 +48,13 @@ themes:
       index: Beta_Diversity
       units: ''
       legend:
-        type: categorical
+        type: continuous
         colors:
-        - '#00000000'
-        - '#4daf4a'
+        - '#0D0887FF'
+        - '#7E03A8FF'
+        - '#CC4678FF'
+        - '#F89441FF'
+        - '#F0F921FF'
       provenance: missing
     status: yes
     visible: no
@@ -57,10 +66,13 @@ themes:
       index: Shrub
       units: ''
       legend:
-        type: categorical
+        type: continuous
         colors:
-        - '#00000000'
-        - '#984ea3'
+        - '#000004FF'
+        - '#56106EFF'
+        - '#BB3754FF'
+        - '#F98C0AFF'
+        - '#FCFFA4FF'
       provenance: missing
     status: yes
     visible: no
@@ -72,10 +84,13 @@ themes:
       index: Wetland
       units: ''
       legend:
-        type: categorical
+        type: continuous
         colors:
-        - '#00000000'
-        - '#ff7f00'
+        - '#0B0405FF'
+        - '#3E356BFF'
+        - '#357BA2FF'
+        - '#49C1ADFF'
+        - '#DEF5E5FF'
       provenance: missing
     status: yes
     visible: no
